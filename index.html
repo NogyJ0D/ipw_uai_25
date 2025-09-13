@@ -2,6 +2,30 @@
 <html>
   <head>
     <title>IPW 2025</title>
+
+    <style>
+      #sitios li {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: gray;
+        border: 1px solid black;
+      }
+
+      #sitios a {
+        color: white;
+        font-weight: bolder;
+        font-size: 1.2rem;
+      }
+
+      #sitios img {
+        width: 400px;
+      }
+
+      #sitios img:hover {
+        width: 600px;
+        transition: all;
+      }
+    </style>
   </head>
 
   <body>
@@ -9,16 +33,33 @@
       <h1>IPW 2025</h1>
     </header>
     <nav>
+      <h2><a href="./README.md">README</a></h2>
+
       <h2>Tareas</h2>
-      <ul>
+      <ul id="sitios">
         <li>
-          <a href="./actividades/clase02.html"><b>Clase 2</b> - Noticia</a>
+          <a href="./actividades/clase02.html">
+            <span><b>Clase 2</b> - Noticia básica</span>
+            <img src="./public/img/captura_sitio_2.png" />
+          </a>
         </li>
         <li>
-          <a href="./actividades/clase03.html"><b>Clase 3</b> - Noticia</a>
+          <a href="./actividades/clase03.html">
+            <span><b>Clase 3</b> - Noticia con form</span>
+            <img src="./public/img/captura_sitio_3.png" />
+          </a>
         </li>
         <li>
-          <a href="./actividades/clase04.html"><b>Clase 4</b> - Noticia</a>
+          <a href="./actividades/clase04.html">
+            <span><b>Clase 4</b> - Noticia con CSS</span>
+            <img src="./public/img/captura_sitio_4.png" />
+          </a>
+        </li>
+        <li>
+          <a href="./actividades/clase05.html">
+            <span><b>Clase 5</b> - Noticia responsive</span>
+            <img src="./public/img/captura_sitio_5.png" />
+          </a>
         </li>
       </ul>
     </nav>
