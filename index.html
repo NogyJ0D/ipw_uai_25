@@ -4,26 +4,41 @@
     <title>IPW 2025</title>
 
     <style>
+      #sitios {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+      }
+
       #sitios li {
-        display: inline-block;
+        flex: 1;
+        min-width: 300px;
         padding: 5px 10px;
         background-color: gray;
         border: 1px solid black;
+        transition: all 0.3s ease;
+      }
+
+      #sitios li:hover {
+        transform: scale(1.1);
       }
 
       #sitios a {
         color: white;
         font-weight: bolder;
         font-size: 1.2rem;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
       }
 
       #sitios img {
-        width: 400px;
-      }
-
-      #sitios img:hover {
-        width: 600px;
-        transition: all;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
       }
     </style>
   </head>
@@ -39,26 +54,32 @@
       <ul id="sitios">
         <li>
           <a href="./actividades/clase02.html">
-            <span><b>Clase 2</b> - Noticia básica</span>
+            <span><b>Actividad 2</b> - Noticia básica</span>
             <img src="./public/img/captura_sitio_2.png" />
           </a>
         </li>
         <li>
           <a href="./actividades/clase03.html">
-            <span><b>Clase 3</b> - Noticia con form</span>
+            <span><b>Actividad 3</b> - Noticia con form</span>
             <img src="./public/img/captura_sitio_3.png" />
           </a>
         </li>
         <li>
           <a href="./actividades/clase04.html">
-            <span><b>Clase 4</b> - Noticia con CSS</span>
+            <span><b>Actividad 4</b> - Noticia con CSS</span>
             <img src="./public/img/captura_sitio_4.png" />
           </a>
         </li>
         <li>
           <a href="./actividades/clase05.html">
-            <span><b>Clase 5</b> - Noticia responsive</span>
+            <span><b>Actividad 5</b> - Noticia responsive</span>
             <img src="./public/img/captura_sitio_5.png" />
+          </a>
+        </li>
+        <li>
+          <a href="./actividades/clase06.html">
+            <span><b>Actividad 6</b> - Noticia flex</span>
+            <img src="./public/img/captura_sitio_6.png" />
           </a>
         </li>
       </ul>
