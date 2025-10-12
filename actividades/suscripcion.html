@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sandro cumpliría 80 años: así saltó a la fama el ídolo argentino | TN</title>
+    <link rel="stylesheet" href="../public/styles/normalize.css" />
+    <link rel="stylesheet" href="../public/styles/hoja_06.css" />
+
+    <style>
+      #form-suscripcion_campos {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+      }
+
+      .form-suscripcion_campo {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-suscripcion_campo input {
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 4px 8px;
+      }
+
+      .form-suscripcion_campo_error {
+        display: none;
+        color: red;
+      }
+
+      @media screen and (min-width: 729px) {
+        #form-suscripcion_campos {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: 20px;
+          row-gap: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav id="hamb-navbar">
+        <p>Link 1</p>
+        <p>Link 2</p>
+        <p>Link 3</p>
+        <p>Link 4</p>
+      </nav>
+
+      <div id="temas-hoy">
+        <b id="temas-titulo">Temas de hoy:</b>
+        <ul>
+          <li>Javier Milei</li>
+          <li>Escándalo de los audios</li>
+          <li>Dólar hoy</li>
+          <li>Tensión cambiaria</li>
+          <li>Presuntas coimas en Discapacidad</li>
+          <li>Diputados</li>
+        </ul>
+      </div>
+
+      <div id="cabecera">
+        <div id="cabecera-izquierda">
+          <button id="btn-secciones">Secciones</button>
+          <a id="logo-tn" href="https://tn.com.ar/">
+            <span style="color: blue">T</span>
+            <span style="color: red">N</span>
+          </a>
+          <h2 id="seccion-titulo">Suscripción</h2>
+        </div>
+        <div id="cabecera-derecha">
+          <a id="link-ingresar" href="./login.html">Ingresar</a>
+          <a id="btn-envivo" href="https://tn.com.ar/envivo/24hs/">EN VIVO</a>
+        </div>
+      </div>
+    </header>
+
+    <main style="display: flex; flex-direction: column">
+      <div>
+        <h1>Suscribirse a las noticias</h1>
+      </div>
+      <form id="form-suscripcion" style="background-color: #bebebe; padding: 20px; margin: auto">
+        <legend style="font-weight: bold; font-size: 1.1rem">Ingrese sus datos</legend>
+
+        <div id="form-suscripcion_campos">
+          <div class="form-suscripcion_campo">
+            <label for="nombre">Nombre completo</label>
+            <input id="nombre" name="nombre" type="text" minlength="7" />
+            <p id="form-suscripcion_nombre_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="email">Correo</label>
+            <input id="email" name="email" type="email" />
+            <p id="form-suscripcion_email_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="contrasenia">Contraseña</label>
+            <input id="contrasenia" name="contrasenia" type="password" minlength="8" />
+            <p id="form-suscripcion_contrasenia_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="edad">Edad</label>
+            <input id="edad" name="edad" type="number" step="1" />
+            <p id="form-suscripcion_edad_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" name="telefono" type="text" minlength="7" />
+            <p id="form-suscripcion_telefono_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" name="direccion" type="text" minlength="5" />
+            <p id="form-suscripcion_direccion_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="ciudad">Ciudad</label>
+            <input id="ciudad" name="ciudad" type="text" minlength="3" />
+            <p id="form-suscripcion_ciudad_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="cod_postal">Código Postal</label>
+            <input id="cod_postal" name="cod_postal" type="text" minlength="3" />
+            <p id="form-suscripcion_cod_postal_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+
+          <div class="form-suscripcion_campo">
+            <label for="dni">DNI</label>
+            <input id="dni" name="dni" type="text" minlength="7" maxlength="8" />
+            <p id="form-suscripcion_dni_error" class="form-suscripcion_campo_error">Error</p>
+          </div>
+        </div>
+        <button type="submit" id="form-suscripcion_enviar" style="width: 100%; margin-top: 10px; font-weight: bold; font-size: 1.1rem">Suscribirse</button>
+      </form>
+    </main>
+
+    <script src="../public/js/actividad09.js"></script>
+  </body>
+</html>
