@@ -55,11 +55,11 @@ function validarCampo(campo) {
   if (errores.length > 0) {
     errorElemento.innerHTML = errores.join('<br>');
     errorElemento.style.display = 'block';
-    return false;
+    return null;
   } else {
     errorElemento.innerHTML = '';
     errorElemento.style.display = 'none';
-    return true;
+    return valor.trim();
   }
 }
 
@@ -91,6 +91,9 @@ var suscripcionCampos = {
   ciudad: {
     minLength: 3,
   },
+  cod_postal: {
+    minLength: 3,
+  },
   dni: {
     minLength: 7,
     maxLength: 8,
@@ -120,14 +123,89 @@ formulario.addEventListener('submit', function (e) {
   e.preventDefault();
   var esValido = true;
 
+  var camposValidados = {};
+
   for (var i = 0; i < claves.length; i++) {
     var campo = claves[i];
-    if (!validarCampo(campo)) {
+    var campoValidado = validarCampo(campo);
+    if (campoValidado === null) {
       esValido = false;
+    } else {
+      camposValidados[campo] = campoValidado;
     }
   }
 
   if (esValido) {
-    window.alert('Suscripto exitosamente');
+    if (e.target.clase.value === '9') {
+      window.alert('Suscripto exitosamente');
+    } else if (e.target.clase.value === '10') {
+      document.getElementById('form-suscripcion_enviar').innerText = 'Cargando datos...';
+      document.getElementById('form-suscripcion_enviar').disabled = true;
+
+      enviarDatos(camposValidados);
+    }
+  }
+});
+
+function enviarDatos(datos) {
+  // https://jsonplaceholder.typicode.com/
+
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    body: JSON.stringify(datos),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  })
+    .then(response => {
+      console.log(response);
+      console.log(response.status);
+      if (response.status == '201') {
+        return response.json();
+      }
+      throw new Error('Error al subir los datos');
+    })
+    .then(data => {
+      console.log(data);
+      document.getElementById('form-suscripcion_enviar').innerText = 'Suscripción exitosa';
+
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modal-contenido').innerHTML = '<p>' + JSON.stringify(data) + '</p>';
+
+      for (campo in data) {
+        localStorage.setItem(campo, data[campo]);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modal-contenido').innerHTML = '<p>' + error + '</p>';
+
+      document.getElementById('form-suscripcion_enviar').innerText = 'Suscripción fallida';
+
+      localStorage.clear();
+    })
+    .finally(() => {
+      document.getElementById('form-suscripcion_enviar').disabled = false;
+    });
+}
+
+function ocultarModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  var claves = Object.keys(suscripcionCampos);
+  for (var i = 0; i < claves.length; i++) {
+    var campo = claves[i];
+    var valorGuardado = localStorage.getItem(campo);
+
+    var elemento = document.getElementById(campo);
+    if (valorGuardado) {
+      elemento.value = valorGuardado;
+    } else {
+      elemento.value = null;
+    }
   }
 });
