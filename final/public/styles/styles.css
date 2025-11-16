@@ -1,0 +1,154 @@
+/* https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  border: 2px solid gray;
+  border-radius: 25px;
+  padding: 6px 4px;
+}
+
+header {
+  color: #fff;
+  background-color: #003049;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+#titulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#titulo h1,
+#titulo p {
+  margin: 0;
+  padding-block: 0;
+  line-height: 1.1;
+}
+
+#nombre-jugador {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+#puntaje-jugador {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+#reiniciar-boton {
+  display: none;
+  padding: 6px 10px;
+  border: 1px solid white;
+  background-color: #c1121f;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+#reiniciar-boton:hover {
+  background-color: #780000;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px;
+}
+
+#form-nombre {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#form-nombre input {
+  text-align: center;
+}
+
+#form-nombre input:focus {
+  outline: none;
+}
+
+#form-nombre button {
+  width: 100%;
+  padding-block: 10px;
+  border: 2px solid #003049;
+  background-color: #669bbc;
+  color: #fff;
+  border-radius: 10px;
+}
+
+#juego {
+  display: none;
+  background-color: #fdf0d5;
+  border: 3px solid black;
+  width: 50%;
+  aspect-ratio: 1/1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: rotateX(50deg);
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.simon-boton {
+  width: 50%;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+#simon-boton-1 {
+  background-color: #00ff00;
+}
+#simon-boton-1:hover {
+  background-color: #00a800;
+}
+#simon-boton-2 {
+  background-color: #ff0000;
+}
+#simon-boton-2:hover {
+  background-color: #ac0000;
+}
+#simon-boton-3 {
+  background-color: #fff000;
+}
+#simon-boton-3:hover {
+  background-color: #9e9400;
+}
+#simon-boton-4 {
+  background-color: #0000ff;
+}
+#simon-boton-4:hover {
+  background-color: #0000b1;
+}
