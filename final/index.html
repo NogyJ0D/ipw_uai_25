@@ -17,20 +17,42 @@
       </div>
       <p id="nombre-jugador">Jugador: <span id="nombre-jugador_span"></span></p>
       <p id="puntaje-jugador">Puntaje: <span id="puntaje-jugador_span"></span></p>
-      <button id="reiniciar-boton">Reiniciar</button>
-    </header>
-    <main>
-      <form id="form-nombre">
-        <label for="nombre">Ingrese su nombre:</label>
-        <input type="text" name="nombre" required placeholder="Nombre del jugador" />
-        <button type="submit">Iniciar</button>
-      </form>
-      <div id="juego">
-        <div id="simon-boton-1" class="simon-boton"></div>
-        <div id="simon-boton-2" class="simon-boton"></div>
-        <div id="simon-boton-3" class="simon-boton"></div>
-        <div id="simon-boton-4" class="simon-boton"></div>
+      <div id="controles">
+        <button id="button-jugar">Jugar</button>
+        <button id="button-clasificaciones">Clasificaciones</button>
+        <button id="button-reiniciar">Reiniciar</button>
       </div>
+    </header>
+
+    <main>
+      <article id="art-form-nombre">
+        <form id="form-nombre">
+          <label for="nombre">Ingrese su nombre:</label>
+          <input type="text" name="nombre" required placeholder="Nombre del jugador" />
+          <span id="span-error-nombre">Ingrese un nombre.</span>
+          <button type="submit">Iniciar</button>
+        </form>
+      </article>
+
+      <article id="art-juego">
+        <div id="juego">
+          <div id="simon-boton-1" class="simon-boton"></div>
+          <div id="simon-boton-2" class="simon-boton"></div>
+          <div id="simon-boton-3" class="simon-boton"></div>
+          <div id="simon-boton-4" class="simon-boton"></div>
+        </div>
+      </article>
+
+      <article id="art-clasificatoria">
+        <table id="tabla-clasificatoria">
+          <thead>
+            <th>Nombre</th>
+            <th>Puntos</th>
+            <th>Fecha</th>
+          </thead>
+          <tbody id="tabla-clasificatoria-cuerpo"></tbody>
+        </table>
+      </article>
     </main>
 
     <script src="./public/scripts/script.js"></script>
