@@ -18,15 +18,28 @@ var puntajeJugadorP = document.getElementById('puntaje-jugador');
 var puntajeJugadorSpan = document.getElementById('puntaje-jugador_span');
 var botonesJuego = document.getElementsByClassName('simon-boton');
 var audioBeep = document.getElementById('audio-beep');
+var textoJuga = document.getElementById('juga');
 
 // Audios
 var audiosBeep = ['./public/Beep-10.mp3', './public/Beep-5.mp3', './public/Beep.mp3', './public/Beep+5.mp3', './public/Beep+10.mp3'];
+var audioJuga = './public/juga.mp3';
 
 // Estado
+var modoSecuencia = true;
 var nombreJugador = undefined;
 var puntaje = 0;
 var secuencia = [];
-var ronda = 0;
+var ronda = 1;
+var pasoActual = 0;
+
+for (var i = 0; i < botonesJuego.length; i++) {
+  botonesJuego.item(i).addEventListener('mouseover', function (e) {
+    e.target.classList.add('simon-boton-hover');
+  });
+  botonesJuego.item(i).addEventListener('mouseout', function (e) {
+    e.target.classList.remove('simon-boton-hover');
+  });
+}
 
 // Iniciar juego
 formNombre.addEventListener('submit', function (e) {
@@ -47,24 +60,17 @@ formNombre.addEventListener('submit', function (e) {
 
     artJuego.style.display = 'block';
 
-    var fechaActual = new Date();
-    var fechaFormateada = fechaActual.toLocaleDateString('es-AR') + ' ' + fechaActual.toLocaleTimeString('es-AR');
+    secuencia = [];
+    puntaje = 0;
+    ronda = 1;
 
-    var datosJugador = {
-      puntaje: 0,
-      ultima_partida: fechaFormateada,
-      mayor_puntuacion: 0,
-      fecha_mayor_puntuacion: fechaFormateada,
-    };
-
-    if (localStorage.getItem('clasif_' + nombreJugador) !== null) {
-      // Si ya existe, actualizar ultima_partida
-      var datosExistentes = JSON.parse(localStorage.getItem('clasif_' + nombreJugador));
-      datosExistentes.ultima_partida = fechaFormateada;
-      localStorage.setItem('clasif_' + nombreJugador, JSON.stringify(datosExistentes));
-    } else {
-      localStorage.setItem('clasif_' + nombreJugador, JSON.stringify(datosJugador));
-    }
+    audioBeep.pause();
+    audioBeep.currentTime = 0;
+    audioBeep.src = audioJuga;
+    audioBeep.play();
+    setTimeout(function () {
+      crearSecuencia(false);
+    }, 1000);
 
     return;
   }
@@ -72,22 +78,80 @@ formNombre.addEventListener('submit', function (e) {
   document.getElementById('span-error-nombre').style.display = 'block';
 });
 
+function crearSecuencia(reiniciar) {
+  modoSecuencia = true;
+  pasoActual = 0;
+
+  if (!reiniciar) {
+    var randomBoton = Math.floor(Math.random() * 4);
+    secuencia.push(randomBoton);
+  }
+
+  console.log(secuencia);
+  textoJuga.innerText = 'Ronda ' + ronda;
+
+  // Mostrar la secuencia completa con delay entre cada botón
+  var delay = 0;
+  for (var i = 0; i < secuencia.length; i++) {
+    (function (index) {
+      setTimeout(function () {
+        var botonIndex = secuencia[index];
+        botonesJuego.item(botonIndex).classList.add('simon-boton-hover');
+        reproducirSonido(botonIndex);
+
+        setTimeout(function () {
+          botonesJuego.item(botonIndex).classList.remove('simon-boton-hover');
+
+          // Al terminar la última animación, permitir que el jugador juegue
+          if (index === secuencia.length - 1) {
+            modoSecuencia = false;
+          }
+        }, 800);
+      }, delay);
+      delay += 1000;
+    })(i);
+  }
+}
+
 function terminarJuego() {
+  // Guardar en localStorage antes de resetear
+  if (nombreJugador && puntaje > 0) {
+    var fechaActual = new Date();
+    var fechaFormateada = fechaActual.toLocaleDateString('es-AR') + ' ' + fechaActual.toLocaleTimeString('es-AR');
+
+    var clave = 'clasif_' + nombreJugador;
+
+    if (localStorage.getItem(clave) !== null) {
+      // Si ya existe, actualizar ultima_partida y verificar si superó la mayor puntuación
+      var datosExistentes = JSON.parse(localStorage.getItem(clave));
+      datosExistentes.ultima_partida = fechaFormateada;
+      datosExistentes.puntaje = puntaje;
+
+      if (puntaje > datosExistentes.mayor_puntuacion) {
+        datosExistentes.mayor_puntuacion = puntaje;
+        datosExistentes.fecha_mayor_puntuacion = fechaFormateada;
+      }
+
+      localStorage.setItem(clave, JSON.stringify(datosExistentes));
+    } else {
+      // Si es nuevo, crear entrada
+      var datosJugador = {
+        puntaje: puntaje,
+        ultima_partida: fechaFormateada,
+        mayor_puntuacion: puntaje,
+        fecha_mayor_puntuacion: fechaFormateada,
+      };
+      localStorage.setItem(clave, JSON.stringify(datosJugador));
+    }
+  }
+
   secuencia = [];
   puntaje = 0;
 }
 botonReiniciar.addEventListener('click', terminarJuego);
 
-function crearSecuencia() {
-  var randomBoton = Math.floor(Math.random() * 4);
-  secuencia.push(randomBoton);
-}
-
 function reiniciarJuego() {
   nombreJugador = undefined;
-  puntaje = 0;
-  secuencia = [];
-  ronda = 0;
 
   console.log('A');
   artJuego.style.display = 'none';
@@ -105,15 +169,46 @@ function reiniciarJuego() {
 }
 botonReiniciar.addEventListener('click', reiniciarJuego);
 
+function reproducirSonido(botonIndex) {
+  audioBeep.pause();
+  audioBeep.currentTime = 0;
+  audioBeep.src = audiosBeep[botonIndex];
+  audioBeep.play().catch(function (err) {});
+}
+
+function clickBotonJuego(e) {
+  if (modoSecuencia) {
+    return;
+  }
+
+  var id = Number(e.target.id.split('-')[2]);
+  reproducirSonido(id);
+
+  if (secuencia[pasoActual] === id) {
+    pasoActual++;
+
+    // Completó secuencia
+    if (pasoActual === secuencia.length) {
+      puntaje++;
+      ronda++;
+      puntajeJugadorSpan.innerText = puntaje;
+      setTimeout(function () {
+        crearSecuencia(false);
+      }, 500);
+    }
+  } else {
+    // Repite secuencia
+    textoJuga.innerText = '¡MAL!, repetilo.';
+    setTimeout(function () {
+      crearSecuencia(true);
+    }, 1000);
+  }
+}
+
 // Click de botón en el juego
 for (var i = 0; i < botonesJuego.length; i++) {
   var boton = botonesJuego[i];
-  boton.addEventListener('click', function (e) {
-    var randomAudio = Math.floor(Math.random() * audiosBeep.length);
-    audioBeep.src = audiosBeep[randomAudio];
-    audioBeep.play();
-    var id = e.target.id.split('-')[2];
-  });
+  boton.addEventListener('click', clickBotonJuego);
 }
 
 function mostrarJugar() {

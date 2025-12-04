@@ -162,6 +162,12 @@ main {
   aspect-ratio: 1/1;
 }
 
+#juga {
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+}
+
 #juego {
   display: flex;
   border: 10px solid black;
@@ -183,29 +189,20 @@ main {
   cursor: pointer;
 }
 
-#simon-boton-1 {
+.simon-boton-hover {
+  box-shadow: inset 0 0 0 999px rgba(0, 0, 0, 0.4);
+}
+#simon-boton-0 {
   background-color: #00ff00;
 }
-#simon-boton-1:hover {
-  background-color: #00a800;
-}
-#simon-boton-2 {
+#simon-boton-1 {
   background-color: #ff0000;
 }
-#simon-boton-2:hover {
-  background-color: #ac0000;
-}
-#simon-boton-3 {
+#simon-boton-2 {
   background-color: #fff000;
 }
-#simon-boton-3:hover {
-  background-color: #9e9400;
-}
-#simon-boton-4 {
+#simon-boton-3 {
   background-color: #0000ff;
-}
-#simon-boton-4:hover {
-  background-color: #0000b1;
 }
 
 #art-clasificatoria {
