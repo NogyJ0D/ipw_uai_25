@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./public/styles/normalize.css" />
     <link rel="stylesheet" href="./public/styles/styles.css" />
     <link rel="icon" type="favicon" href="./public/favicon.ico" />
@@ -8,19 +10,21 @@
   </head>
 
   <body>
-    <audio id="audio-beep"></audio>
+    <audio id="audio-sonido"></audio>
 
     <header>
       <div id="titulo">
         <h1>Simón Dice</h1>
         <p>Valentin Giarra</p>
       </div>
-      <p id="nombre-jugador">Jugador: <span id="nombre-jugador_span"></span></p>
-      <p id="puntaje-jugador">Puntaje: <span id="puntaje-jugador_span"></span></p>
+      <p id="nombre-jugador">Jugador: <span id="nombre-jugador-span"></span></p>
+      <p id="puntaje-jugador">Puntaje: <span id="puntaje-jugador-span"></span></p>
       <div id="controles">
-        <button id="button-jugar">Jugar</button>
-        <button id="button-clasificaciones">Clasificaciones</button>
-        <button id="button-reiniciar">Reiniciar</button>
+        <a href="https://github.com/NogyJ0D/ipw_uai_25" id="a-codigo-fuente" target="_blank">Código Fuente</a>
+        <button id="boton-jugar">Jugar</button>
+        <button id="boton-contacto">Contacto</button>
+        <button id="boton-clasificaciones">Clasificaciones</button>
+        <button id="boton-reiniciar">Reiniciar</button>
       </div>
     </header>
 
@@ -28,23 +32,47 @@
       <article id="art-form-nombre">
         <form id="form-nombre">
           <label for="nombre">Ingrese su nombre:</label>
-          <input type="text" name="nombre" required placeholder="Nombre del jugador" />
-          <span id="span-error-nombre">Ingrese un nombre.</span>
+          <input type="text" name="nombre" placeholder="Nombre del jugador" />
+          <span id="span-error-nombre-nombre">Ingrese un nombre.</span>
           <button type="submit">Iniciar</button>
         </form>
       </article>
 
+      <article id="art-form-contacto">
+        <form id="form-contacto">
+          <label for="contacto-nombre">Ingrese su nombre:</label>
+          <input type="text" id="contacto-nombre" name="nombre" placeholder="Nombre del usuario" />
+          <span id="span-error-contacto-nombre">Ingrese un nombre.</span>
+
+          <label for="contacto-email">Ingrese su email:</label>
+          <input type="email" id="contacto-email" name="email" placeholder="usuario@gmail.com" />
+          <span id="span-error-contacto-email">Ingrese un email.</span>
+
+          <label for="contacto-mensaje">Ingrese su mensaje:</label>
+          <textarea id="contacto-mensaje" name="mensaje"></textarea>
+          <span id="span-error-contacto-mensaje">Ingrese un mensaje.</span>
+
+          <button type="submit">Enviar</button>
+        </form>
+      </article>
+
       <article id="art-juego">
+        <h3 id="tiempo">00:00</h3>
         <h2 id="juga">¡JUGÁ!</h2>
         <div id="juego">
-          <div id="simon-boton-0" class="simon-boton"></div>
-          <div id="simon-boton-1" class="simon-boton"></div>
-          <div id="simon-boton-2" class="simon-boton"></div>
-          <div id="simon-boton-3" class="simon-boton"></div>
+          <div id="juego-boton-0" class="juego-boton"></div>
+          <div id="juego-boton-1" class="juego-boton"></div>
+          <div id="juego-boton-2" class="juego-boton"></div>
+          <div id="juego-boton-3" class="juego-boton"></div>
         </div>
       </article>
 
       <article id="art-clasificatoria">
+        <div id="controles-clasificacion">
+          <label>Ordenar por:</label>
+          <button id="ordenar-puntos" class="boton-orden activo">Puntos</button>
+          <button id="ordenar-fecha" class="boton-orden">Fecha</button>
+        </div>
         <table id="tabla-clasificatoria">
           <thead>
             <th>Nombre</th>
@@ -55,6 +83,18 @@
         </table>
       </article>
     </main>
+
+    <div id="modal-resultado">
+      <div id="modal-contenido">
+        <h2>¡Juego Terminado!</h2>
+        <p><strong>Jugador:</strong> <span id="modal-nombre"></span></p>
+        <p><strong>Puntuación:</strong> <span id="modal-puntuacion"></span></p>
+        <p><strong>Rondas completadas:</strong> <span id="modal-rondas"></span></p>
+        <p><strong>Tiempo:</strong> <span id="modal-tiempo"></span></p>
+        <p><strong>Fecha:</strong> <span id="modal-fecha"></span></p>
+        <button id="modal-cerrar">Cerrar</button>
+      </div>
+    </div>
 
     <script src="./public/scripts/script.js"></script>
   </body>
