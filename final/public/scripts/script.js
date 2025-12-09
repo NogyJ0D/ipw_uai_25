@@ -14,6 +14,7 @@ var nombreJugadorSpan = document.getElementById('nombre-jugador-span');
 var puntajeJugadorP = document.getElementById('puntaje-jugador');
 var puntajeJugadorSpan = document.getElementById('puntaje-jugador-span');
 
+var aCodigoFuente = document.getElementById('a-codigo-fuente');
 var botonJugar = document.getElementById('boton-jugar');
 var botonContacto = document.getElementById('boton-contacto');
 var botonClasificaciones = document.getElementById('boton-clasificaciones');
@@ -35,6 +36,7 @@ var articuloJuego = document.getElementById('art-juego');
 var textoTiempo = document.getElementById('tiempo');
 var textoJuga = document.getElementById('juga');
 var botonesJuego = document.getElementsByClassName('juego-boton');
+var juegoContenedor = document.getElementById('juego');
 
 var articuloClasificatoria = document.getElementById('art-clasificatoria');
 var botonOrdenarPuntos = document.getElementById('ordenar-puntos');
@@ -47,6 +49,7 @@ var modalPuntuacion = document.getElementById('modal-puntuacion');
 var modalRondas = document.getElementById('modal-rondas');
 var modalTiempo = document.getElementById('modal-tiempo');
 var modalFecha = document.getElementById('modal-fecha');
+var modalDetallesPuntaje = document.getElementById('modal-detalles-puntaje');
 var botonCerrarModal = document.getElementById('modal-cerrar');
 
 // ===== ESTADO =====
@@ -86,6 +89,7 @@ function mostrarJugar() {
   articuloContacto.style.display = 'none';
   botonJugar.style.display = 'none';
 
+  aCodigoFuente.style.display = 'block';
   botonContacto.style.display = 'block';
   botonClasificaciones.style.display = 'block';
   articuloFormularioNombre.style.display = 'flex';
@@ -134,6 +138,7 @@ function manejarEnvioFormularioNombre(e) {
     puntajeJugadorP.style.display = 'flex';
     puntajeJugadorSpan.innerText = puntaje;
 
+    aCodigoFuente.style.display = 'none';
     botonContacto.style.display = 'none';
     botonClasificaciones.style.display = 'none';
     botonReiniciar.style.display = 'block';
@@ -173,12 +178,18 @@ function crearSecuencia(reiniciar) {
   modoSecuencia = true;
   pasoActual = 0;
 
+  for (var j = 0; j < botonesJuego.length; j++) {
+    botonesJuego.item(j).classList.remove('juego-boton-hover');
+  }
+
   if (!reiniciar) {
     var randomBoton = Math.floor(Math.random() * 4);
     secuencia.push(randomBoton);
   }
 
+  textoJuga.style.color = '#00ff00';
   textoJuga.innerText = 'Ronda ' + ronda;
+  document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #0d1a0d 70%, #001a00 100%)';
 
   var delay = 0;
   for (var i = 0; i < secuencia.length; i++) {
@@ -193,6 +204,8 @@ function crearSecuencia(reiniciar) {
 
           if (index === secuencia.length - 1) {
             modoSecuencia = false;
+            textoJuga.style.color = '#ffffff';
+            document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #0d0d0d 70%, #000000 100%)';
           }
         }, 800);
       }, delay);
@@ -212,6 +225,11 @@ function clicBotonJuego(e) {
   if (secuencia[pasoActual] === id) {
     pasoActual++;
 
+    juegoContenedor.classList.add('anillo-verde');
+    setTimeout(function () {
+      juegoContenedor.classList.remove('anillo-verde');
+    }, 300);
+
     if (pasoActual === secuencia.length) {
       puntaje++;
       ronda++;
@@ -226,7 +244,14 @@ function clicBotonJuego(e) {
     if (errores >= 3) {
       finalizarJuegoPorErrores();
     } else {
+      juegoContenedor.classList.add('anillo-rojo');
+      setTimeout(function () {
+        juegoContenedor.classList.remove('anillo-rojo');
+      }, 800);
+
+      textoJuga.style.color = '#ff0000';
       textoJuga.innerText = '¡MAL!, repetilo.';
+      document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #1a0d0d 70%, #1a0000 100%)';
       setTimeout(function () {
         crearSecuencia(true);
       }, 2000);
@@ -279,7 +304,16 @@ function terminarJuego() {
   modalRondas.innerText = ronda - 1;
   modalTiempo.innerText = tiempoFormateado;
   modalFecha.innerText = fechaFormateada;
+
+  var textoPuntaje = 'Rondas: ' + puntaje + ' puntos';
+  if (penalizacion > 0) {
+    textoPuntaje += ' - Penalización por tiempo: -' + penalizacion + ' (' + segundosTranscurridos + 's ÷ 10)';
+  }
+  modalDetallesPuntaje.innerHTML = '<small>' + textoPuntaje + '</small>';
+
   modalResultado.style.display = 'flex';
+
+  document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #0d0d0d 70%, #000000 100%)';
 
   secuencia = [];
   puntaje = 0;
@@ -302,8 +336,10 @@ function reiniciarJuego() {
   puntajeJugadorP.style.display = 'none';
   puntajeJugadorSpan.innerText = undefined;
 
+  aCodigoFuente.style.display = 'block';
   botonContacto.style.display = 'block';
   botonClasificaciones.style.display = 'block';
+
   botonReiniciar.style.display = 'none';
   botonReiniciar.innerText = 'Reiniciar';
 
@@ -312,20 +348,27 @@ function reiniciarJuego() {
 
 function finalizarJuegoPorErrores() {
   textoJuga.innerText = 'GAME OVER - 3 errores';
+  textoJuga.style.color = '#ff0000';
+  document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #1a0d0d 70%, #1a0000 100%)';
   modoSecuencia = true;
 
   setTimeout(function () {
+    document.body.style.background = 'radial-gradient(circle, #333333 0%, #1a1a1a 40%, #0d0d0d 70%, #000000 100%)';
     terminarJuego();
     reiniciarJuego();
   }, 2500);
 }
 
 function manejarHoverBotonJuego(e) {
-  e.target.classList.add('juego-boton-hover');
+  if (!modoSecuencia) {
+    e.target.classList.add('juego-boton-hover');
+  }
 }
 
 function manejarSalirHoverBotonJuego(e) {
-  e.target.classList.remove('juego-boton-hover');
+  if (!modoSecuencia) {
+    e.target.classList.remove('juego-boton-hover');
+  }
 }
 
 for (var i = 0; i < botonesJuego.length; i++) {
